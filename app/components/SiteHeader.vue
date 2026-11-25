@@ -2,6 +2,7 @@
 const route = useRoute()
 const isArticle = computed(() => route.path.startsWith('/articles/'))
 const mobileMenu = ref<HTMLDetailsElement | null>(null)
+const searchOpen = ref(false)
 const navigation = [
   { to: '/', label: 'Главная' },
   { to: '/catalog', label: 'Все статьи' },
@@ -33,13 +34,14 @@ const navigation = [
       >
     </nav>
     <div class="ml-auto flex shrink-0 items-center gap-2 md:ml-0">
-      <span
-        class="grid size-11 cursor-default place-items-center rounded-[11px] border border-[#a7c4ff36] bg-[#b3caff12] text-[#b3c4e5] lg:hidden"
-        role="note"
-        aria-label="Поиск пока недоступен"
+      <button
+        type="button"
+        class="flex h-11 w-11 items-center justify-center rounded-[11px] border border-[#a7c4ff36] bg-[#b3caff12] text-[#b3c4e5] transition hover:border-[#a7c4ff70] hover:bg-[#b3caff20] lg:h-[38px] lg:w-[225px] lg:justify-start lg:gap-2 lg:px-3"
+        aria-label="Открыть поиск по справке"
+        @click="searchOpen = true"
       >
         <svg
-          class="size-5"
+          class="size-5 shrink-0 lg:size-4"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -49,24 +51,8 @@ const navigation = [
           <circle cx="10.5" cy="10.5" r="6.5" />
           <path d="m16 16 4 4" stroke-linecap="round" />
         </svg>
-      </span>
-      <span
-        class="hidden h-[38px] w-[225px] cursor-default items-center gap-2 rounded-[11px] border border-[#a7c4ff36] bg-[#b3caff12] px-3 text-[12px] text-[#b3c4e5] lg:flex"
-        aria-label="Поиск пока недоступен"
-      >
-        <svg
-          class="size-4 shrink-0"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          aria-hidden="true"
-        >
-          <circle cx="10.5" cy="10.5" r="6.5" />
-          <path d="m16 16 4 4" stroke-linecap="round" />
-        </svg>
-        Поиск по справке
-      </span>
+        <span class="hidden text-[12px] lg:inline">Поиск по справке</span>
+      </button>
       <details
         ref="mobileMenu"
         class="relative md:hidden"
@@ -104,4 +90,5 @@ const navigation = [
       </details>
     </div>
   </header>
+  <SearchDialog v-model="searchOpen" />
 </template>
