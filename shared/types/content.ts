@@ -30,3 +30,19 @@ export interface KnowledgeBase {
   categories: Category[]
   articles: ArticleSummary[]
 }
+
+export interface SearchIndexCategory {
+  slug: string
+  icon: string
+  tone: number
+}
+
+export interface SearchIndexArticle {
+  slug: string
+  title: string
+  category: SearchIndexCategory | null
+}
+
+export interface SearchIndex {
+  articles: SearchIndexArticle[]
+}
