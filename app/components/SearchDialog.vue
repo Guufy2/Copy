@@ -40,6 +40,18 @@ function recordHistory(value: string) {
   }
 }
 
+function clearHistory() {
+  history.value = []
+
+  if (!import.meta.client) return
+
+  try {
+    localStorage.removeItem(HISTORY_KEY)
+  } catch {
+    // История очищена в интерфейсе, даже если localStorage недоступен.
+  }
+}
+
 function close() {
   isOpen.value = false
 }
@@ -225,7 +237,7 @@ watch(isOpen, (open) => {
                   v-if="history.length"
                   type="button"
                   class="text-[11px] font-semibold text-[#8fa8e1] hover:text-white"
-                  @click="history = []; localStorage.removeItem(HISTORY_KEY)"
+                  @click="clearHistory"
                 >
                   Очистить
                 </button>
